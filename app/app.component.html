@@ -1,34 +1,23 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <form (ngSubmit)="onFormSubmit()" #f="ngForm">
-        <button class="btn btn-sm btn-info" (click)="fillValues()">Fill Value</button>
-        <div *ngIf="!userData.valid && userData.touched">User data is INVALID</div>
-        <div ngModelGroup="userData" #userData="ngModelGroup">
+      <form [formGroup]='signUpForm' (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label for="username">User Name</label>
-            <input type="text" class="form-control" id="username" name="username" ngModel required/>
+            <label>User Name</label>
+            <input type="text" class="form-control" formControlName='username'/>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" ngModel required email #email="ngModel"/>
-            <span class="help-text" *ngIf="!email.valid && email.touched">Please enter valid email</span>
+            <label>Email</label>
+            <input type="text" class="form-control" formControlName='email'/>
           </div>
-        </div>
-          <div class="form-group">
-            <label for="gender">Gender</label>
-              <select class="form-control" id="gender" name="gender" [ngModel]="gender">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-             </select>
+          <div *ngFor="let gender of genders">
+            <label>
+              <input type="radio" name="gender" [value]='gender' formControlName='gender'/>
+              {{gender}}
+            </label>
           </div>
-          <div class="form-group">
-            <label for="about">About</label>
-            <input type="textarea" class="form-control" id="about" name="about" [(ngModel)]="about"/>
-            </div>
-            <div>{{about}}</div>
           <div class="mt-2">
-            <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
           </div>
         </form>
       </div>
