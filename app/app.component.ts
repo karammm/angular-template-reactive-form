@@ -14,4 +14,16 @@ export class AppComponent {
   onFormSubmit(f: NgForm) {
     console.log(this.signupForm);
   }
+
+  fillValues(){
+    //for seting all values use setValue and to set few values use patchValue
+    this.signupForm.form.patchValue({
+      userData:{
+        email:'karam@siila.org',
+        username:"karam"
+      },
+      // gender:'male',
+      // about:'About US'
+    })
+  }
 }
