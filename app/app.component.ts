@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent {
   name = 'Angular 5';
+  gender="male";
+  about="";
   @ViewChild('f') signupForm: NgForm;
   onFormSubmit(f: NgForm) {
     console.log(this.signupForm);
