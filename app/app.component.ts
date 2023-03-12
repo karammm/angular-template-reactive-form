@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'my-app',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
     this.signUpForm= new FormGroup({
       'userData': new FormGroup({
         'username': new FormControl(null,[Validators.required, this.isRestrictedName.bind(this)]),
-        'email': new FormControl(null,[Validators.required,Validators.email]),
+        'email': new FormControl(null,[Validators.required,Validators.email],[this.isRestrictedEmails]),
       }),
       'gender': new FormControl('female',Validators.required),
       'hobbies': new FormArray([])//list of form controls
@@ -28,11 +29,24 @@ export class AppComponent implements OnInit {
     console.log(this.signUpForm)
   }
 
-  isRestrictedName(control:FormControl){
+  isRestrictedName(control:FormControl): {[s:string]:boolean}{
     if(this.restrictedNames.includes(control.value)){
       return {nameIsRestricted:true};
     }
     return null;
+  }
+
+  isRestrictedEmails(control:FormControl):Promise<any> | Observable<any>{
+    let promise= new Promise((resolve,rejected)=>{
+        setTimeout(()=>{
+            if(control.value==='test@test.com'){
+              resolve({emailIsRestricted:true});
+            }else{
+              resolve(null);
+            }
+        },2000)
+    });
+    return promise;
   }
 
   onAddHobby(){
