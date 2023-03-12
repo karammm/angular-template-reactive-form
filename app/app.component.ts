@@ -22,7 +22,13 @@ export class AppComponent implements OnInit {
       }),
       'gender': new FormControl('female',Validators.required),
       'hobbies': new FormArray([])//list of form controls
-    })
+    });
+    this.signUpForm.valueChanges.subscribe(value=>{
+      console.log(value);
+    });//for changing any value in dom
+    this.signUpForm.statusChanges.subscribe(value=>{
+      console.log(value);
+    });//givues you corrent status
   }
 
   onSubmit(){
